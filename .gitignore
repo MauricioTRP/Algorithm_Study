@@ -1,3 +1,6 @@
 # ignore Cpp output files
 *.o
 *.out
+
+#ignore vscode configurations
+.vscode/
