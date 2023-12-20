@@ -1,12 +1,25 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<random>
 
 /**
  * Implementation of a QuickSort algorithm
 */
 
 enum class comparisonOperator{ greater, smaller };
+
+/**
+ * This functions returns a random index for an array
+ * this'll be used to pick a random pivot on quickSort
+*/
+int psudoRandomSample( std::vector<int> array ) {
+    std::mt19937 generator(std::random_device{}());
+    std::uniform_int_distribution<std::size_t> distribution(0, array.size() - 1);
+
+    std::size_t index = distribution(generator);
+    return array[index];
+}
 
 std::vector<int> filterArray(const std::vector<int>& unfilteredArray, int threshold, comparisonOperator greater_or_smaller_input ) {
     std::vector<int> filteredArray;
@@ -31,7 +44,7 @@ std::vector<int> quickSort( std::vector<int> unsortedVector ) {
         return unsortedVector;
     } else {
         // partition array into, smaller than pivot, greater than pivot and pivot
-        int pivot = unsortedVector[0];
+        int pivot = psudoRandomSample(unsortedVector);
 
         auto smaller = filterArray(unsortedVector, pivot, comparisonOperator::smaller);
         auto greater = filterArray(unsortedVector, pivot, comparisonOperator::greater);
@@ -52,7 +65,7 @@ int main() {
     std::vector<int> unsortedVector = {1,15,2,64,13,4,12,6,14,23,16,31,43143,11};
     
     // print unsorted
-    std::cout << std::endl << "Usorted" << std::endl;
+    std::cout << std::endl << "Unsorted" << std::endl;
     for ( const auto&  unsorted : unsortedVector ){
         std::cout << unsorted << " ";
     }
